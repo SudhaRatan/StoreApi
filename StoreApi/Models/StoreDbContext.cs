@@ -182,15 +182,15 @@ public partial class StoreDbContext : DbContext
 
         modelBuilder.Entity<ShopAddress>(entity =>
         {
+            entity.Property(e => e.Address)
+                .HasMaxLength(1000)
+                .IsUnicode(false);
             entity.Property(e => e.Building)
                 .HasMaxLength(500)
                 .IsUnicode(false);
-            entity.Property(e => e.City)
-                .HasMaxLength(100)
-                .IsUnicode(false);
             entity.Property(e => e.CoordinateX).HasColumnType("decimal(18, 0)");
             entity.Property(e => e.CoordinateY).HasColumnType("decimal(18, 0)");
-            entity.Property(e => e.StreetName)
+            entity.Property(e => e.Landmark)
                 .HasMaxLength(500)
                 .IsUnicode(false);
 

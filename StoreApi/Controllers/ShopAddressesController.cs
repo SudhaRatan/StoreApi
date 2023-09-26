@@ -74,9 +74,8 @@ namespace StoreApi.Controllers
             {
                 return NotFound(shopAddress);
             }
-            existingShopAddress.StreetName = shopAddress.StreetName;
+            existingShopAddress.Address = shopAddress.Address;
             existingShopAddress.Building = shopAddress.Building;
-            existingShopAddress.City = shopAddress.City;
             existingShopAddress.CoordinateX = shopAddress.CoordinateX;
             existingShopAddress.CoordinateY = shopAddress.CoordinateY;
 

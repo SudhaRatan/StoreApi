@@ -9,15 +9,15 @@ public partial class ShopAddress
 
     public int ShopId { get; set; }
 
-    public string City { get; set; } = null!;
-
-    public string StreetName { get; set; } = null!;
+    public string Address { get; set; } = null!;
 
     public string Building { get; set; } = null!;
 
-    public decimal? CoordinateX { get; set; }
+    public string? Landmark { get; set; }
 
-    public decimal? CoordinateY { get; set; }
+    public decimal CoordinateX { get; set; }
 
-    public virtual Shop? Shop { get; set; }
+    public decimal CoordinateY { get; set; }
+
+    public virtual Shop Shop { get; set; } = null!;
 }
