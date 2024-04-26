@@ -19,6 +19,8 @@ public partial class StoreDbContext : DbContext
 
     public virtual DbSet<Cart> Carts { get; set; }
 
+    public virtual DbSet<Category> Categories { get; set; }
+
     public virtual DbSet<Inventory> Inventories { get; set; }
 
     public virtual DbSet<Order> Orders { get; set; }
@@ -38,10 +40,6 @@ public partial class StoreDbContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     public virtual DbSet<UserAddress> UserAddresses { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=RSUDHA-L-5538\\SQLEXPRESS;Initial Catalog=StoreDB;Persist Security Info=True;User ID=sa;Password=Welcome2evoke@1234; Trust Server Certificate=true");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -68,6 +66,14 @@ public partial class StoreDbContext : DbContext
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Cart_Users");
+        });
+
+        modelBuilder.Entity<Category>(entity =>
+        {
+            entity.Property(e => e.Image).IsUnicode(false);
+            entity.Property(e => e.Name)
+                .HasMaxLength(500)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<Inventory>(entity =>
@@ -188,8 +194,8 @@ public partial class StoreDbContext : DbContext
             entity.Property(e => e.Building)
                 .HasMaxLength(500)
                 .IsUnicode(false);
-            entity.Property(e => e.CoordinateX).HasColumnType("decimal(18, 0)");
-            entity.Property(e => e.CoordinateY).HasColumnType("decimal(18, 0)");
+            entity.Property(e => e.CoordinateX).HasColumnType("decimal(18, 8)");
+            entity.Property(e => e.CoordinateY).HasColumnType("decimal(18, 8)");
             entity.Property(e => e.Landmark)
                 .HasMaxLength(500)
                 .IsUnicode(false);

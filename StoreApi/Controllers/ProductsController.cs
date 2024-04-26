@@ -36,11 +36,11 @@ namespace StoreApi.Controllers
             {
                 return NotFound();
             }
-            return await _context.Products.Skip(10 * page).Take(10).ToListAsync();
+            return await _context.Products.Skip(12 * page).Take(12).ToListAsync();
         }
 
         [HttpGet("ProductsNotInInventory")]
-        [Authorize(Roles = "Shop")]
+        [Authorize(Roles = "Shop,Admin")]
         public async Task<ActionResult> ProductsNotInventory(int page)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
@@ -49,7 +49,7 @@ namespace StoreApi.Controllers
             {
                 return NotFound();
             }
-            var products = _context.Products.Where(p => !_context.Inventories.Any(i => i.ShopId == iden.Id && i.ProductId == p.Id)).Skip(10 * page).Take(10).AsQueryable();
+            var products = _context.Products.Where(p => !_context.Inventories.Any(i => i.ShopId == iden.Id && i.ProductId == p.Id)).Skip(12 * page).Take(12).AsQueryable();
             int count = _context.Products.Where(p => !_context.Inventories.Any(i => i.ShopId == iden.Id && i.ProductId == p.Id)).AsQueryable().Count();
             ProdInvPagination prods = new ProdInvPagination();
             prods.products = products;
@@ -86,7 +86,7 @@ namespace StoreApi.Controllers
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin,Shop")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PutProduct(int id, ProductDTO product)
         {
             if (id != product.Id)
@@ -194,7 +194,7 @@ namespace StoreApi.Controllers
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok();
         }
 
         [HttpPost("Find")]

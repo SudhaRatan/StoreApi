@@ -19,5 +19,5 @@ public partial class ShopAddress
 
     public decimal CoordinateY { get; set; }
 
-    public virtual Shop Shop { get; set; } = null!;
+    public virtual Shop? Shop { get; set; }
 }

@@ -107,10 +107,10 @@ namespace StoreApi.Controllers
             {
                 return Problem("Entity set 'StoreDbContext.ShopAddresses'  is null.");
             }
-            if (_context.ShopAddresses.Count() == 0)
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            Iden iden = _roleId.GetIden(identity);
+            if (_context.ShopAddresses.Where(sa => sa.ShopId == iden.Id).Count() == 0)
             {
-                var identity = HttpContext.User.Identity as ClaimsIdentity;
-                Iden iden = _roleId.GetIden(identity);
                 shopAddress.ShopId = iden.Id;
                 await _context.ShopAddresses.AddAsync(shopAddress);
                 await _context.SaveChangesAsync();
